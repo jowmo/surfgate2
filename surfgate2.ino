@@ -3,10 +3,10 @@ const bool actuatorsEnabled = true;
 /*
  * Setup pins for actuator relays
  */
-int relayPin1PortOpen  = 4;        // IN1 connected to digital pin 6
-int relayPin2PortClose = 5;        // IN2 connected to digital pin 7
-int relayPin3StarOpen  = 9;        // IN3 connected to digital pin 8
-int relayPin4StarClose = 10;       // IN4 connected to digital pin 9
+int relayPin1PortOpen  = 4;        // IN1 connected to digital pin 4
+int relayPin2PortClose = 5;        // IN2 connected to digital pin 5
+int relayPin3StarOpen  = 9;        // IN3 connected to digital pin 9
+int relayPin4StarClose = 10;       // IN4 connected to digital pin 10
 
 /*
  * Single pole dual throw "Surf Left" "Surf Right" switch pins
@@ -47,7 +47,7 @@ unsigned long debounceDelay    = 100;    // the debounce time; increase if the o
  * setup speed paramaters 
  */
 float currentSpeed = 0.0;
-float minSpeed     = 7.0;
+float minSpeed     = 5.0;
 float maxSpeed     = 14.0;
 
 /*
@@ -160,7 +160,7 @@ void loop() {
   if (debouncedMode == "starboard") {
     if (enabled && !isStarOpen) openStarGate();
   }
-  if (debouncedMode == "center") {
+  if (debouncedMode == "center" || !enabled) {
     if (!isClosed) closeGates();
   }
  
@@ -190,7 +190,7 @@ void loop() {
  */
 void falling_edge(void)
 {
-  //Serial.println("PULSE");
+  Serial.println("PULSE");
     pulseCount++;
     lastPulseTime = micros();
 }
